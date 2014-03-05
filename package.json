@@ -1,0 +1,8 @@
+{
+  "name": "sqwiggle-node",
+  "version": "0.0.1",
+  "dependencies": {},
+  "scripts": {
+    "test": "make test"
+  }
+}
