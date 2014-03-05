@@ -14,7 +14,6 @@ describe('Rooms', function(){
 
     it ('loads the list of rooms', function(done) {
       client.rooms.index(function(err, response) {
-        // console.log(response)
         response.length.should.equal(2)
         response[0].name.should.equal("Sqwiggle")
         done();
@@ -31,11 +30,26 @@ describe('Rooms', function(){
     it("Finds a single room", function(done) {
       client.rooms.find(1, function(err, resp) {
         resp.id.should.equal(1)
-        
         done();
       })
     })
     
   });
+
+  describe('Sqwiggle.rooms.create', function(){
+    scope.post('/rooms').reply(201, { id: 7489,
+        user_id: 7854,
+        name: 'Test Room',
+        created_at: '2014-03-05T22:25:09Z',
+        path: 'testroom' })
+
+    it("Creates a room", function(done) {
+      client.rooms.create("Test Room", function(err, resp) {
+        should.not.exist(err)
+        resp.name.should.equal('Test Room')
+        done();
+      })
+    })
+  })
 
 });
