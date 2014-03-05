@@ -1,1 +1,1 @@
-module.exports = require('./lib/sqwiggle-node');
+module.exports = require('./lib/sqwiggle');

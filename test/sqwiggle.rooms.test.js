@@ -1,27 +1,41 @@
 var should = require('should');
 var nock = require('nock');
 var Sqwiggle = require('../index');
-var client = new Sqwiggle('test_api_key')
+var client = new Sqwiggle('cli_81fea39928d4d83558bff12ec80ed7fb')
 
 describe('Rooms', function(){
+  var scope = nock('https://api.sqwiggle.com')
 
   describe('Sqwiggle.rooms.index', function() {
-    var scope = nock('https://api.sqwiggle.com')
-                    .get('/rooms')
-                    .reply(200, [{"id":1,"user_id":1,"name":"Sqwiggle","created_at":"2013-07-06T20:26:59Z","path":"","user_count":3},
-                      {"id":2,"user_id":2,"name":"Github","created_at":"2013-12-19T12:44:40Z","path":"github","user_count":0}
-                    ]);
+    scope.get('/rooms')
+      .reply(200, [{"id":1,"user_id":1,"name":"Sqwiggle","created_at":"2013-07-06T20:26:59Z","path":"","user_count":3},
+        {"id":2,"user_id":2,"name":"Github","created_at":"2013-12-19T12:44:40Z","path":"github","user_count":0}
+      ]);
 
     it ('loads the list of rooms', function(done) {
       client.rooms.index(function(err, response) {
-        should.not.exist(err)
-        should.exist(response)
+        // console.log(response)
         response.length.should.equal(2)
         response[0].name.should.equal("Sqwiggle")
         done();
       })
-    })
+    });
 
-  })
+  });
+
+
+  describe('Sqwiggle.rooms.find', function(){
+    scope.get('/rooms/1')
+      .reply(200, {"id":1,"user_id":10,"name":"Sqwiggle","created_at":"2013-07-06T20:26:59Z","path":""})
+
+    it("Finds a single room", function(done) {
+      client.rooms.find(1, function(err, resp) {
+        resp.id.should.equal(1)
+        
+        done();
+      })
+    })
+    
+  });
 
 });
