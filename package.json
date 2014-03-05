@@ -1,8 +1,11 @@
 {
   "name": "sqwiggle-node",
   "version": "0.0.1",
-  "dependencies": {},
+  "dependencies": {
+    request: "2.34.0"
+  },
   "scripts": {
     "test": "make test"
   }
+
 }
