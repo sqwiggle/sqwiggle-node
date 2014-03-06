@@ -73,7 +73,7 @@ describe('Rooms', function(){
   describe('Sqwiggle.rooms.remove', function() {
     scope.delete('/rooms/7492').reply(200, '')
     it("deletes a room", function(done) {
-      client.rooms.remove(7492, function(err, resp) {
+      client.rooms.delete(7492, function(err, resp) {
         should.not.exist(err)
         resp.should.equal('OK')
         done()
