@@ -46,7 +46,7 @@ describe('Rooms', function(){
         path: 'testroom' })
 
     it("Creates a room", function(done) {
-      client.rooms.create("Test Room", function(err, resp) {
+      client.rooms.create({"name": "Test Room"}, function(err, resp) {
         should.not.exist(err)
         resp.name.should.equal('Test Room')
         done();
@@ -62,7 +62,7 @@ describe('Rooms', function(){
         path: 'renamedtestroom' })
 
     it("updates a room", function(done) {
-      client.rooms.update(7489, "Renamed Test Room", function(err, resp) {
+      client.rooms.update(7489, {"name": "Renamed Test Room"}, function(err, resp) {
         should.not.exist(err)
         resp.name.should.equal("Renamed Test Room")
         done()
