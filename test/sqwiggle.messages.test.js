@@ -25,7 +25,16 @@ describe('Sqwiggle.messages', function(){
     scope.get('/messages').reply(200, [sample_message])
 
     it("loads the list of messages", function(done){
-      client.messages.index(function(err, resp) {
+      client.messages.index(null, function(err, resp) {
+        resp[0].text.should.equal('Hello from Nodejs!')
+        done()
+      })
+    })
+    
+    scope.get('/messages?page=2&limit=1').reply(200, [sample_message])
+    it('accepts page and limit', function(done) {
+      client.messages.index({page: 2, limit: 1}, function(err, resp) {
+        resp.length.should.equal(1)
         resp[0].text.should.equal('Hello from Nodejs!')
         done()
       })

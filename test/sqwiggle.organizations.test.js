@@ -27,7 +27,7 @@ describe('Sqwiggle.organizations', function(){
     scope.get('/organizations').reply(200, [ sample_org ])
       
     it('loads the list of organizations', function(done) {
-      client.organizations.index(function(err, resp) {
+      client.organizations.index(null, function(err, resp) {
         resp[0].name.should.equal('Google')
         done()
       })

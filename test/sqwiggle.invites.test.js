@@ -17,8 +17,17 @@ describe('Sqwiggle.invites', function(){
   describe('.index', function() {
     scope.get('/invites').reply(200, [sample_invite])
     it('loads the list of invitations', function(done){
-      client.invites.index(function(err, resp) {
+      client.invites.index(null, function(err, resp) {
         resp[0].id.should.equal(1234);
+        done()
+      })
+    })
+
+    scope.get('/invites?page=2&limit=1').reply(200, [sample_invite])
+    it('accepts page and limit', function(done) {
+      client.invites.index({page: 2, limit: 1}, function(err, resp) {
+        resp.length.should.equal(1)
+        resp[0].email.should.equal('sqwiggletest@example.com')
         done()
       })
     })

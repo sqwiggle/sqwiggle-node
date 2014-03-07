@@ -1,26 +1,36 @@
 var should = require('should');
 var nock = require('nock');
 var Sqwiggle = require('../index');
-var client = new Sqwiggle('test_api_key')
+var client = new Sqwiggle('test_api_key');
+
+var sample_room = {"id":1,"user_id":1,"name":"Sqwiggle","created_at":"2013-07-06T20:26:59Z","path":"","user_count":3};
 
 describe('Rooms', function(){
   var scope = nock('https://api.sqwiggle.com')
 
   describe('Sqwiggle.rooms.index', function() {
     scope.get('/rooms')
-      .reply(200, [{"id":1,"user_id":1,"name":"Sqwiggle","created_at":"2013-07-06T20:26:59Z","path":"","user_count":3},
-        {"id":2,"user_id":2,"name":"Github","created_at":"2013-12-19T12:44:40Z","path":"github","user_count":0}
-      ]);
+      .reply(200, [sample_room]);
 
-    it ('loads the list of rooms', function(done) {
-      client.rooms.index(function(err, response) {
+    it('loads the list of rooms', function(done) {
+      client.rooms.index(null, function(err, response) {
         // nock.restore()
         // console.log(response)
-        response.length.should.equal(2)
+        response.length.should.equal(1)
         response[0].name.should.equal("Sqwiggle")
         done();
       })
     });
+
+    scope.get('/rooms?page=2&limit=1').reply(200, [sample_room])
+
+    it('accepts page and limit', function(done) {
+      client.rooms.index({page: 2, limit: 1}, function(err, resp) {
+        resp.length.should.equal(1)
+        resp[0].name.should.equal('Sqwiggle')
+        done()
+      })
+    })
 
   });
 

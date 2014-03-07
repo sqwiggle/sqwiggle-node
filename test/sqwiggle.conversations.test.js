@@ -12,10 +12,10 @@ var sample_conversation = { id: 12345,
   participated: 
     [ { id: 123,
         name: 'Steve Jobs',
-        avatar: 'https://sqwiggle-photos.s3.amazonaws.com/9432/avatar/9844f81e1408f6ecb932137d33bed7cfdcf518a3_120_120.jpg?1382198598895' },
+        avatar: 'https://sqwiggle-photos.s3.amazonaws.com/9432/avatar/9844f81408f6ecb932137d33bed7cfdcf518a3_120_120.jpg?1382198598895' },
       { id: 456,
         name: 'Bill Gates',
-        avatar: 'https://sqwiggle-photos.s3.amazonaws.com/13025/avatar/9844f81e1408f6ecb932137d33bed7cfdcf518a3_120_120.jpg?1382456760670' } 
+        avatar: 'https://sqwiggle-photos.s3.amazonaws.com/13025/avatar/9844e1408f6ecb932137d33bed7cfdcf518a3_120_120.jpg?1382456760670' } 
     ],
   duration: 134 }
 
@@ -25,7 +25,16 @@ describe('Sqwiggle.conversations', function(){
   describe('.index', function() {
     scope.get('/conversations').reply(200, [sample_conversation])
     it("loads the list of conversations", function(done) {
-      client.conversations.index(function(err, resp) {
+      client.conversations.index(null, function(err, resp) {
+        resp[0].room_id.should.equal(1)
+        done()
+      })
+    })
+
+    scope.get('/conversations?page=2&limit=1').reply(200, [sample_conversation])
+    it('accepts page and limit', function(done) {
+      client.conversations.index({page: 2, limit: 1}, function(err, resp) {
+        resp.length.should.equal(1)
         resp[0].room_id.should.equal(1)
         done()
       })

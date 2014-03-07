@@ -26,8 +26,17 @@ describe('Sqwiggle.users', function(){
   describe('.index', function(){
     scope.get('/users').reply(200, [sample_user])
     it('loads the list of users', function(done){
-      client.users.index(function(err, resp) {
+      client.users.index(null, function(err, resp) {
         resp[0].email.should.equal('email@test.com')
+        done()
+      })
+    })
+
+    scope.get('/users?page=2&limit=1').reply(200, [sample_user])
+    it('accepts page and limit', function(done) {
+      client.users.index({page: 2, limit: 1}, function(err, resp) {
+        resp.length.should.equal(1)
+        resp[0].name.should.equal('Test User')
         done()
       })
     })

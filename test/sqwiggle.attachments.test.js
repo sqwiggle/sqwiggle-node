@@ -23,12 +23,20 @@ describe('Sqwiggle.attachments', function(){
       .reply(200,  [sample_attachment])
     
     it("loads the list of attachments", function(done) {
-      client.attachments.index(function(err, resp) {
+      client.attachments.index(null, function(err, resp) {
         should.not.exist(err)
         resp[0].image.should.equal('http://media.giphy.com/media/adyoOZ92ftxgk/200.gif')
         done()
       })
+    })
 
+    scope.get('/attachments?page=2&limit=1').reply(200, [sample_attachment])
+    it('accepts page and limit', function(done) {
+      client.attachments.index({page: 2, limit: 1}, function(err, resp) {
+        resp.length.should.equal(1)
+        resp[0].image.should.equal('http://media.giphy.com/media/adyoOZ92ftxgk/200.gif')
+        done()
+      })
     })
   })
 
