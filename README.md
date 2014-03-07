@@ -27,8 +27,13 @@ The module exports an API wrapper that you can use to query any of the existing 
 
     // Index actions
     client.service.index({data: "for filtering or updating"}, function(error, response) {
-      // handle response or error here.
-      // response will be an array of objects of type service
+      if(error) {
+        // Something went wrong. You will find details in the error hash
+        console.log(error)
+      } else {
+        // Response contains the information retrieved from the server
+        console.log(response)
+      }
     })
 
     // Find actions
@@ -62,9 +67,9 @@ As well as one that does not:
 
 which has 3 endpoints:
 
-  client.info.configuration
-  client.info.versions
-  client.info.all
+    client.info.configuration(callback)
+    client.info.versions(callback)
+    client.info.all(callback)
 
 For more information on the endpoints and parameters, check out the [Sqwiggle API documentation](https://www.sqwiggle.com/docs)
 
