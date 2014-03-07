@@ -146,19 +146,6 @@ client.info.all(function(err, resp) {
 
 ## Contributing
 
-### Test dependencies
-```Bash
-npm install mocha
-npm install should
-npn install nock
-```
-
-### Running tests:
-```Bash
-make test
-```
-
-### The Fun Part
 1. Fork the project
 1. Create your feature branch (`git checkout -b my-new-feature`)
 1. Write a test for your use-case
