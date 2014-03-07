@@ -3,12 +3,7 @@ var nock = require('nock');
 var Sqwiggle = require('../index');
 var client = new Sqwiggle('test_api_key')
 
-describe('Sqwiggle.attachments', function(){
-  var scope = nock('https://api.sqwiggle.com')
-
-  describe('.index', function() {
-    scope.get('/attachments')
-      .reply(200,  [{ id: 47477,
+sample_attachment = { id: 1234,
             url: 'http://media.giphy.com/media/adyoOZ92ftxgk/200.gif',
             title: null,
             animated: true,
@@ -18,8 +13,14 @@ describe('Sqwiggle.attachments', function(){
             width: null,
             height: null,
             created_at: '2014-03-04T00:20:44Z',
-            updated_at: '2014-03-04T00:20:44Z' }])
+            updated_at: '2014-03-04T00:20:44Z' }
 
+describe('Sqwiggle.attachments', function(){
+  var scope = nock('https://api.sqwiggle.com')
+
+  describe('.index', function() {
+    scope.get('/attachments')
+      .reply(200,  [sample_attachment])
     
     it("loads the list of attachments", function(done) {
       client.attachments.index(function(err, resp) {
@@ -32,20 +33,10 @@ describe('Sqwiggle.attachments', function(){
   })
 
   describe('.find', function() {
-    scope.get('/attachments/47477').reply(200, { id: 47477,
-      url: 'http://media.giphy.com/media/adyoOZ92ftxgk/200.gif',
-      title: null,
-      animated: true,
-      type: 'image',
-      image: 'http://media.giphy.com/media/adyoOZ92ftxgk/200.gif',
-      status: null,
-      width: null,
-      height: null,
-      created_at: '2014-03-04T00:20:44Z',
-      updated_at: '2014-03-04T00:20:44Z' })
+    scope.get('/attachments/1234').reply(200, sample_attachment)
 
-    it.only("loads a single attachment", function(done) {
-      client.attachments.find(47477, function(err, resp) {
+    it("loads a single attachment", function(done) {
+      client.attachments.find(1234, function(err, resp) {
         resp.image.should.equal('http://media.giphy.com/media/adyoOZ92ftxgk/200.gif')
         done()
       })
@@ -53,11 +44,24 @@ describe('Sqwiggle.attachments', function(){
   })
 
   describe('.update', function() {
-    48776
-    it("updates an existing attachment")
+    scope.put('/attachments/1234').reply(200, sample_attachment)
+
+    it("updates an existing attachment", function(done) {
+      client.attachments.update(1234, {title: 'foo'}, function(err, resp) {
+        resp.id.should.equal(1234)
+        done()
+      })
+    })
   })
 
   describe('.remove', function() {
-    it("deletes an existing attachment")
+    scope.delete('/attachments/1234').reply(200, '')
+
+    it("deletes an existing attachment", function(done) {
+      client.attachments.delete(1234, function(err, resp) {
+        resp.should.equal('OK')
+        done()
+      })
+    })
   })
 })
