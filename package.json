@@ -1,7 +1,7 @@
 {
   "name": "sqwiggle-node",
   "version": "0.0.1",
-  "repository: {
+  "repository": {
     "type": "git",
     "url": "https://github.com/sqwiggle/sqwiggle-node.git"
   },
