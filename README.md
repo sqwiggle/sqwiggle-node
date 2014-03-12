@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/sqwiggle/sqwiggle-node.png?branch=master)](https://travis-ci.org/sqwiggle/sqwiggle-node)
+
 sqwiggle-node
 =============
 
