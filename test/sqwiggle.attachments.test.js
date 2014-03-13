@@ -24,7 +24,7 @@ describe('Sqwiggle.attachments', function(){
     
     it("loads the list of attachments", function(done) {
       client.attachments.index(null, function(err, resp) {
-        should.not.exist(err)
+        if (err) return done(err);
         resp[0].image.should.equal('http://media.giphy.com/media/adyoOZ92ftxgk/200.gif')
         done()
       })

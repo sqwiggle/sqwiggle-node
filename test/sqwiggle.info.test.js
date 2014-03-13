@@ -19,7 +19,7 @@ describe("Info", function() {
     it("loads the configuration info", function(done) {
       client.info.configuration(function(err, response) {
         response.storage.avatars.should.equal('sqwiggle-photos')
-        should.not.exist(err)
+        if (err) return done(err);
         done()
       })
     })
@@ -34,7 +34,7 @@ describe("Info", function() {
     it("loads the versions info", function(done) {
       client.info.versions(function(err, response) {
         response.mac.should.equal('0.4.5')
-        should.not.exist(err)
+        if (err) return done(err);
         done()
       })
     })
@@ -61,7 +61,7 @@ describe("Info", function() {
       client.info.all(function(err, response) {
         response.versions.mac.should.equal('0.4.5')
         response.configuration.storage.avatars.should.equal('sqwiggle-photos')
-        should.not.exist(err)
+        if (err) return done(err);
         done()
       })
     })
