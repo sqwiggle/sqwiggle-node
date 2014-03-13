@@ -58,7 +58,7 @@ describe('Sqwiggle.messages', function(){
 
     it('creates a message', function(done) {
       client.messages.create({room_id: 12345, text: "Hello from Node!"}, function(err, resp){
-        should.not.exist(err)
+        if (err) return done(err);
         resp.text.should.equal('Hello from Nodejs!')
         done()
       })

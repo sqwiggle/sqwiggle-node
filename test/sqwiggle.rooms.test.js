@@ -57,7 +57,7 @@ describe('Rooms', function(){
 
     it("Creates a room", function(done) {
       client.rooms.create({"name": "Test Room"}, function(err, resp) {
-        should.not.exist(err)
+        if (err) return done(err);
         resp.name.should.equal('Test Room')
         done();
       })
@@ -73,7 +73,7 @@ describe('Rooms', function(){
 
     it("updates a room", function(done) {
       client.rooms.update(7489, {"name": "Renamed Test Room"}, function(err, resp) {
-        should.not.exist(err)
+        if (err) return done(err);
         resp.name.should.equal("Renamed Test Room")
         done()
       })
@@ -84,7 +84,7 @@ describe('Rooms', function(){
     scope.delete('/rooms/7492').reply(200, '')
     it("deletes a room", function(done) {
       client.rooms.delete(7492, function(err, resp) {
-        should.not.exist(err)
+        if (err) return done(err);
         resp.should.equal('OK')
         done()
       })

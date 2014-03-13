@@ -1,9 +1,15 @@
 {
   "name": "sqwiggle-node",
+  "description": "Node.js library for the Sqwiggle API",
+  "homepage": "https://www.sqwiggle.com/docs",
   "version": "0.0.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/sqwiggle/sqwiggle-node.git"
+  },
+  "bugs": { 
+    "url" : "http://github.com/sqwiggle/sqwiggle-node/issues", 
+    "email" : "howdy@sqwiggle.com"
   },
   "dependencies": {
     "request": ">= 2.34.0"
@@ -15,5 +21,14 @@
   },
   "scripts": {
     "test": "make test"
+  },
+  "keywords": [
+    "communication",
+    "video",
+    "api",
+    "sqwiggle"
+  ],
+  "engines": {
+    "node": ">= 0.6.0"
   }
 }
