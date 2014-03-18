@@ -2,7 +2,7 @@
   "name": "sqwiggle-node",
   "description": "Node.js library for the Sqwiggle API",
   "homepage": "https://www.sqwiggle.com/docs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/sqwiggle/sqwiggle-node.git"
